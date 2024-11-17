@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { GameService, getRandomNum } from "gamez";
+import { CenterLoading, GameService, getRandomNum, useComponentRefresh } from "gamez";
 import React, { useEffect, useMemo, useState } from "react";
 import { Highlight } from "./components/Highlight";
 import { TopBar } from "./components/TopBar";
@@ -199,6 +199,7 @@ const CashierChaos: React.FC<GSProps> = ({ gs }) => {
 
 function GameComponent({ gs }: GSProps) {
   const [isGameReady, setIsGameReady] = useState(false);
+  const refresh = useComponentRefresh();
 
   useEffect(() => {
     // wait for assets to be loaded
@@ -221,8 +222,10 @@ function GameComponent({ gs }: GSProps) {
           });
 
           gs.saveReport(report);
-
           if (result === "success") gs.nextLevel();
+
+          alert(result);
+          refresh();
         });
 
         setIsGameReady(true);
@@ -240,7 +243,7 @@ function GameComponent({ gs }: GSProps) {
   }, []);
 
   if (!isGameReady) {
-    return <p>Loading...</p>;
+    return <CenterLoading />;
   }
 
   return <CashierChaos gs={gs} />;
