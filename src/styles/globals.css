@@ -1,0 +1,16 @@
+/* 
+Don't put your custom styles here 
+This file be ignored and its only for the demo
+Keep your styles in a different file and import that in Game.tsx 
+*/
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html,
+body,
+#root {
+  height: 100%;
+  width: 100%;
+}
