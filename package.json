@@ -1,5 +1,5 @@
 {
-  "name": "@creaitors/my-game-package",
+  "name": "@creaitors/cashier-chaos",
   "description": "A simple game using React and Zustand",
   "type": "module",
   "version": "1.0.0",
