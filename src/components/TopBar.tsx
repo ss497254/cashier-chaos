@@ -1,12 +1,12 @@
-import { LivesTracker, formatTime } from "gamez";
+import { LivesTracker, formatTime, useGameService } from "gamez";
 import { useCountDown } from "gamez/src/hooks/useCountDown";
-import { GSProps } from "../Game";
 import { BiSolidStopwatch } from "react-icons/bi";
 
-export function TopBar({ gs }: GSProps) {
+export function TopBar() {
+  const gs = useGameService();
   const { remainingLives } = gs.useGameState();
   const { lives, time } = gs.getCurrLevelDetails();
-  const { countDown } = useCountDown(time, () => gs.endSession("timeout"), gs.getSession() === "end");
+  const { countDown } = useCountDown(time, () => gs.endSession("timeout"), gs.isSessionEnded());
 
   return (
     <div className="absolute inset-x-0 top-0 z-50 flex justify-between p-2">
