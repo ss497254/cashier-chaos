@@ -14,9 +14,18 @@ const HUNDREDS = [20, 10, 5, 2];
 const CENTS = [1, 0.5, 0.2, 0.1];
 
 function getAmount(multiple: number) {
+  let hundreds = getRandomNum(100, 1);
+
+  if (multiple >= 1) {
+    return {
+      hundreds: hundreds - (hundreds % multiple),
+      cents: 0,
+    };
+  }
+
   return {
-    hundreds: getRandomNum(100, 10),
-    cents: multiple >= 1 ? 0 : (Math.round(Math.random() * 100) * 10) % 100,
+    hundreds,
+    cents: (Math.round(Math.random() * 100) * 10) % 100,
   };
 }
 
@@ -237,7 +246,7 @@ function GameComponent({ gs }: GSProps) {
 
     return () => {
       // reset the game when component unmounts
-      if (isGameReady) gs.resetSession();
+      gs.resetSession();
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
