@@ -12,7 +12,6 @@ function GameComponent({ gs }: GameServiceProps) {
       .then(() => {
         // start the session when assets are ready
         gs.startSession();
-        console.log("start");
 
         gs.initState({
           customer: 0,
@@ -44,7 +43,6 @@ function GameComponent({ gs }: GameServiceProps) {
     return () => {
       // reset the game when component unmounts
       gs.resetSession();
-      console.log("reset");
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
