@@ -3,9 +3,11 @@ import { useEffect, useState } from "react";
 import { CashierChaos, emptyCash } from "./CashierChaos";
 import { Instructions } from "./components/Instructions";
 
+let isInstructionsShownAlready = false;
+
 function GameComponent({ gs }: GameServiceProps) {
   const [isGameReady, setIsGameReady] = useState(false);
-  const [showInstructions, setShowInstruction] = useState(true);
+  const [showInstructions, setShowInstruction] = useState(!isInstructionsShownAlready);
   const refresh = useComponentRefresh();
 
   useEffect(() => {
@@ -50,7 +52,7 @@ function GameComponent({ gs }: GameServiceProps) {
   }, []);
 
   if (showInstructions) {
-    return <Instructions onStart={() => setShowInstruction(false)} />;
+    return <Instructions onStart={() => (setShowInstruction(false), (isInstructionsShownAlready = true))} />;
   } else if (!isGameReady) {
     return <CenterLoading />;
   } else if (gs.isGameComplete()) {

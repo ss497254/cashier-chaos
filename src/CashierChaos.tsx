@@ -56,7 +56,7 @@ export function CashierChaos() {
       }
 
       resetResult();
-    }, 1000);
+    }, 500);
   }, [result]);
 
   const { multiple, cashRegisterWorking } = gs.getCurrLevelDetails();
