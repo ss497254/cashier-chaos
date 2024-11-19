@@ -1,9 +1,11 @@
 import { CenterLoading, GameServiceProps, GameServiceWrapper, useComponentRefresh } from "gamez";
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import { CashierChaos, emptyCash } from "./CashierChaos";
+import { Instructions } from "./components/Instructions";
 
 function GameComponent({ gs }: GameServiceProps) {
   const [isGameReady, setIsGameReady] = useState(false);
+  const [showInstructions, setShowInstruction] = useState(true);
   const refresh = useComponentRefresh();
 
   useEffect(() => {
@@ -19,9 +21,9 @@ function GameComponent({ gs }: GameServiceProps) {
           cash: emptyCash(),
         });
 
-        gs.addSessionEndListner(async (result) => {
+        gs.addSessionEndListner((result) => {
           // do something when the session ends (e.g., display results, save data)
-          const report = await gs.collectReport({
+          const report = gs.collectReport({
             level: gs.getCurrLevel(),
             result,
           });
@@ -47,8 +49,12 @@ function GameComponent({ gs }: GameServiceProps) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  if (!isGameReady) {
+  if (showInstructions) {
+    return <Instructions onStart={() => setShowInstruction(false)} />;
+  } else if (!isGameReady) {
     return <CenterLoading />;
+  } else if (gs.isGameComplete()) {
+    return <h1>Game Over!</h1>;
   }
 
   return (
